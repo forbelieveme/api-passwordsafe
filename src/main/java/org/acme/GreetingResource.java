@@ -39,7 +39,7 @@ public class GreetingResource {
 
         // POST TEST
 
-        String urlString = "https://lab01vuvm.desabpd.popular.local/beyondtrust/api/public/v3/";
+        String urlString = "https://lab01vuvm.desabpd.popular.local/beyondtrust/api/public/v3/Auth/SignAppIn";
         String apiKey = "74e592aaec7d75a6b73421a1368c48e68454f9ca0321d8ff2257e1c84192767874dd32c684b449444557e54738504b0ddadc3ffbdcba0afe1db81d88b3f0f3a5";
         String runAsUser = "_api_GEOPS";
         String AuthorizationHeader = "PS-Auth key=" + apiKey + ";" + "runas=" + runAsUser + ";";
@@ -51,10 +51,10 @@ public class GreetingResource {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Authorization", AuthorizationHeader);
-            connection.setDoOutput(true);
-            OutputStream outputStream = connection.getOutputStream();
-            outputStream.write(test.getBytes());
-            outputStream.close();
+            // connection.setDoOutput(true);
+            // OutputStream outputStream = connection.getOutputStream();
+            // outputStream.write(test.getBytes());
+            // outputStream.close();
             InputStream responseStream = connection.getInputStream();
 
             ObjectMapper mapper = new ObjectMapper();
