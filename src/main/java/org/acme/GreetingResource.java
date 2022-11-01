@@ -46,8 +46,15 @@ public class GreetingResource {
         String AuthorizationHeader = "PS-Auth key=" + apiKey + ";" + "runas=" + runAsUser + ";";
 
         try {
-            String test = "{\"email\":\"Developer5@gmail.com\",\"password\":123456}";
+            // String test = "{\"email\":\"Developer5@gmail.com\",\"password\":123456}";
             URL url = new URL(urlString);
+            javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
+                    new javax.net.ssl.HostnameVerifier() {
+                        public boolean verify(String hostname,
+                                javax.net.ssl.SSLSession sslSession) {
+                            return hostname.equals("10.96.36.15");
+                        }
+                    });
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
