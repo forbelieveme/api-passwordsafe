@@ -46,7 +46,7 @@ public class GreetingResource {
         String AuthorizationHeader = "PS-Auth key=" + apiKey + ";" + "runas=" + runAsUser + ";";
 
         try {
-            // String test = "{\"email\":\"Developer5@gmail.com\",\"password\":123456}";
+            
             URL url = new URL(urlString);
             javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
                     new javax.net.ssl.HostnameVerifier() {
@@ -59,11 +59,12 @@ public class GreetingResource {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Authorization", AuthorizationHeader);
-            connection.setRequestProperty("Content-Length", String.valueOf(0));
-            // connection.setDoOutput(true);
-            // OutputStream outputStream = connection.getOutputStream();
-            // outputStream.write(test.getBytes());
-            // outputStream.close();
+            // connection.setRequestProperty("Content-Length", String.valueOf(5));
+			String test = "";
+            connection.setDoOutput(true);
+            OutputStream outputStream = connection.getOutputStream();
+            outputStream.write(test.getBytes());
+            outputStream.close();
             InputStream responseStream = connection.getInputStream();
 
             ObjectMapper mapper = new ObjectMapper();
