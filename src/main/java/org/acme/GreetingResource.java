@@ -43,10 +43,11 @@ public class GreetingResource {
         String urlString = "https://lab01vuvm.desabpd.popular.local/beyondtrust/api/public/v3/Auth/SignAppIn";
         String apiKey = "74e592aaec7d75a6b73421a1368c48e68454f9ca0321d8ff2257e1c84192767874dd32c684b449444557e54738504b0ddadc3ffbdcba0afe1db81d88b3f0f3a5";
         String runAsUser = "_api_GEOPS";
-        String AuthorizationHeader = "PS-Auth key=" + apiKey + ";" + "runas=" + runAsUser + ";";
+        String AuthorizationHeader1 = "PS-Auth key=" + apiKey + ";";
+        String AuthorizationHeader2 = "runas=" + runAsUser + ";";
 
         try {
-            
+
             URL url = new URL(urlString);
             javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
                     new javax.net.ssl.HostnameVerifier() {
@@ -58,9 +59,10 @@ public class GreetingResource {
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Authorization", AuthorizationHeader);
+            connection.setRequestProperty("Authorization", AuthorizationHeader1);
+            connection.setRequestProperty("Authorization", AuthorizationHeader2);
             // connection.setRequestProperty("Content-Length", String.valueOf(5));
-			String test = "";
+            String test = "";
             connection.setDoOutput(true);
             OutputStream outputStream = connection.getOutputStream();
             outputStream.write(test.getBytes());
