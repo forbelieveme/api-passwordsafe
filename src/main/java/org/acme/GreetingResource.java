@@ -59,6 +59,7 @@ public class GreetingResource {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Authorization", AuthorizationHeader);
+            connection.setRequestProperty("Content-Length", String.valueOf(0));
             // connection.setDoOutput(true);
             // OutputStream outputStream = connection.getOutputStream();
             // outputStream.write(test.getBytes());
