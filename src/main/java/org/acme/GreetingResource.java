@@ -49,10 +49,12 @@ public class GreetingResource {
         // String AuthorizationHeader2 = "runas=" + runAsUser + ";";
 
         try {
-            URL baseURL = new URL("HTTPS", "https://lab01vuvm.desabpd.popular.local", 443, "/BeyondTrust/api/public/v3/");
+            URL baseURL = new URL("HTTPS", "https://lab01vuvm.desabpd.popular.local", 443,
+                    "/BeyondTrust/api/public/v3/");
             URL url = new URL(baseURL, "Auth/SignAppIn");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestProperty("Authorization", "PS-Auth key=74e592aaec7d75a6b73421a1368c48e68454f9ca0321d8ff2257e1c84192767874dd32c684b449444557e54738504b0ddadc3ffbdcba0afe1db81d88b3f0f3a5; runas=_api_GEOPS;");
+            connection.setRequestProperty("Authorization",
+                    "PS-Auth key=57dd0e20bd52bf0178a68ad86ecede1833041f1b6cf58ea258ed529083109415db9d27cf2be0e229a9c977ff2f3f08f908f3c16b79546edd77c317cd660abdf9; runas=salesforceipsa;");
             // javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
             // new javax.net.ssl.HostnameVerifier() {
             // public boolean verify(String hostname,
