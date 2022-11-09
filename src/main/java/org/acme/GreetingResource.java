@@ -49,8 +49,7 @@ public class GreetingResource {
         // String AuthorizationHeader2 = "runas=" + runAsUser + ";";
 
         try {
-            URL baseURL = new URL("HTTPS", "https://lab01vuvm.desabpd.popular.local", 443,
-                    "/BeyondTrust/api/public/v3/");
+            URL baseURL = new URL("HTTPS", "lab01vuvm.desabpd.popular.local", 443, "/beyondtrust/api/public/v3/");
             URL url = new URL(baseURL, "Auth/SignAppIn");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Authorization",
