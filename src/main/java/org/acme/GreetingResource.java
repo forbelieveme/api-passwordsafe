@@ -49,7 +49,7 @@ public class GreetingResource {
         // String AuthorizationHeader2 = "runas=" + runAsUser + ";";
 
         try {
-            URL baseURL = new URL("HTTPS", "https://lab01vuvm.desabpd.popular.local", 443, "/BeyondTrust/api/public/v3/");
+            URL baseURL = new URL("HTTPS", "lab01vuvm.desabpd.popular.local", 443, "/beyondtrust/api/public/v3/");
             URL url = new URL(baseURL, "Auth/SignAppIn");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Authorization", "PS-Auth key=74e592aaec7d75a6b73421a1368c48e68454f9ca0321d8ff2257e1c84192767874dd32c684b449444557e54738504b0ddadc3ffbdcba0afe1db81d88b3f0f3a5; runas=_api_GEOPS;");
