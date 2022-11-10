@@ -75,6 +75,7 @@ public class GreetingResource {
             outputStream.write(test.getBytes());
             outputStream.close();
             connection.getInputStream();
+            System.out.println(connection.getHeaderFields().get("Set-Cookie"));
             connection.disconnect();
 
             URL managedAccountsURL = new URL(baseURL, "ManagedAccounts");
