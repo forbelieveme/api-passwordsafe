@@ -75,14 +75,16 @@ public class GreetingResource {
             outputStream.write(test.getBytes());
             outputStream.close();
             connection.getInputStream();
-            System.out.println(connection.getHeaderFields().get("Set-Cookie"));
+            String cookie = connection.getHeaderFields().get("Set-Cookie").toString();
+            System.out.println(cookie);
             connection.disconnect();
 
             URL managedAccountsURL = new URL(baseURL, "ManagedAccounts");
-            HttpURLConnection connection2 = (HttpURLConnection) managedAccountsURL.openConnection();
-            connection2.setRequestProperty("Authorization",
+            connection = (HttpURLConnection) managedAccountsURL.openConnection();
+            connection.setRequestProperty("Cookie", cookie);
+            connection.setRequestProperty("Authorization",
                     "PS-Auth key=57dd0e20bd52bf0178a68ad86ecede1833041f1b6cf58ea258ed529083109415db9d27cf2be0e229a9c977ff2f3f08f908f3c16b79546edd77c317cd660abdf9; runas=salesforceipsa;");
-            InputStream responseStream2 = connection2.getInputStream();
+            InputStream responseStream2 = connection.getInputStream();
 
             ObjectMapper mapper2 = new ObjectMapper();
             JsonNode neoJsonNode2 = mapper2.readTree(responseStream2);
@@ -90,7 +92,7 @@ public class GreetingResource {
             JsonNode accountId = neoJsonNode2.get("AccountId");
             System.out.println("SystemId: " + systemId.toString());
             System.out.println("AccountId: " + accountId.toString());
-            connection2.disconnect();
+            connection.disconnect();
 
             // URL requestIdURL = new URL(baseURL, "Requests");
             // connection = (HttpURLConnection) requestIdURL.openConnection();
