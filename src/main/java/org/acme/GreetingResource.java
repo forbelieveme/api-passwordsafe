@@ -75,7 +75,7 @@ public class GreetingResource {
             outputStream.write(test.getBytes());
             outputStream.close();
             connection.getInputStream();
-            String cookie = connection.getHeaderFields().get("Set-Cookie").toString();
+            String cookie = connection.getHeaderFields().get("Set-Cookie").get(0);
             System.out.println(cookie);
             connection.disconnect();
 
@@ -85,7 +85,6 @@ public class GreetingResource {
             connection.setRequestProperty("Authorization",
                     "PS-Auth key=57dd0e20bd52bf0178a68ad86ecede1833041f1b6cf58ea258ed529083109415db9d27cf2be0e229a9c977ff2f3f08f908f3c16b79546edd77c317cd660abdf9; runas=salesforceipsa;");
             InputStream responseStream2 = connection.getInputStream();
-
             ObjectMapper mapper2 = new ObjectMapper();
             JsonNode neoJsonNode2 = mapper2.readTree(responseStream2);
             JsonNode systemId = neoJsonNode2.get("SystemId");
