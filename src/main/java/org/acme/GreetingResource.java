@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 @Path("/hello")
 public class GreetingResource {
@@ -86,11 +87,9 @@ public class GreetingResource {
                     "PS-Auth key=57dd0e20bd52bf0178a68ad86ecede1833041f1b6cf58ea258ed529083109415db9d27cf2be0e229a9c977ff2f3f08f908f3c16b79546edd77c317cd660abdf9; runas=salesforceipsa;");
             InputStream responseStream2 = connection.getInputStream();
             ObjectMapper mapper2 = new ObjectMapper();
-            JsonNode neoJsonNode2 = mapper2.readTree(responseStream2);
-            JsonNode systemId = neoJsonNode2.get("SystemId");
-            JsonNode accountId = neoJsonNode2.get("AccountId");
-            System.out.println("SystemId: " + systemId.toString());
-            System.out.println("AccountId: " + accountId.toString());
+
+            ArrayNode neoArrayNode2 =(ArrayNode) mapper2.readTree(responseStream2);
+            System.out.println("AccountId: " + neoArrayNode2.isArray());
             connection.disconnect();
 
             // URL requestIdURL = new URL(baseURL, "Requests");
