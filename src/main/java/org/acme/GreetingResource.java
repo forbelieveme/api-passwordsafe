@@ -89,7 +89,9 @@ public class GreetingResource {
             ObjectMapper mapper2 = new ObjectMapper();
 
             ArrayNode neoArrayNode2 =(ArrayNode) mapper2.readTree(responseStream2);
-            System.out.println("AccountId: " + neoArrayNode2.isArray());
+            // System.out.println("AccountId: " + neoArrayNode2.isArray());
+            JsonNode neoJsonNode2 = neoArrayNode2.get(0).get("SystemId");
+            System.out.println("SystemId: " + neoJsonNode2.isArray());
             connection.disconnect();
 
             // URL requestIdURL = new URL(baseURL, "Requests");
