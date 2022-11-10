@@ -50,8 +50,8 @@ public class GreetingResource {
 
         try {
             URL baseURL = new URL("HTTPS", "lab01vuvm.desabpd.popular.local", 443, "/beyondtrust/api/public/v3/");
-            URL url = new URL(baseURL, "Auth/SignAppIn");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            URL SignAppInURL = new URL(baseURL, "Auth/SignAppIn");
+            HttpURLConnection connection = (HttpURLConnection) SignAppInURL.openConnection();
             connection.setRequestProperty("Authorization",
                     "PS-Auth key=57dd0e20bd52bf0178a68ad86ecede1833041f1b6cf58ea258ed529083109415db9d27cf2be0e229a9c977ff2f3f08f908f3c16b79546edd77c317cd660abdf9; runas=salesforceipsa;");
             // javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
@@ -74,11 +74,18 @@ public class GreetingResource {
             OutputStream outputStream = connection.getOutputStream();
             outputStream.write(test.getBytes());
             outputStream.close();
+            connection.getInputStream();
+            connection.disconnect();
+
+            URL managedAccountsURL = new URL(baseURL, "ManagedAccounts");
+            connection = (HttpURLConnection) managedAccountsURL.openConnection();
+            connection.setRequestProperty("Authorization",
+                    "PS-Auth key=57dd0e20bd52bf0178a68ad86ecede1833041f1b6cf58ea258ed529083109415db9d27cf2be0e229a9c977ff2f3f08f908f3c16b79546edd77c317cd660abdf9; runas=salesforceipsa;");
             InputStream responseStream = connection.getInputStream();
 
             ObjectMapper mapper = new ObjectMapper();
             JsonNode neoJsonNode = mapper.readTree(responseStream);
-            JsonNode bpi = neoJsonNode.get("code");
+            JsonNode bpi = neoJsonNode.get("SystemId");
             System.out.println("bpi.toString()");
             System.out.println(bpi.toString());
             connection.disconnect();
