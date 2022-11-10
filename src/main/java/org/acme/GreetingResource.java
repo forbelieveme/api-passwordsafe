@@ -74,17 +74,8 @@ public class GreetingResource {
             OutputStream outputStream = connection.getOutputStream();
             outputStream.write(test.getBytes());
             outputStream.close();
-<<<<<<< HEAD
             connection.getInputStream();
             System.out.println(connection.getHeaderFields().get("Set-Cookie"));
-=======
-            InputStream responseStream = connection.getInputStream();
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode neoJsonNode = mapper.readTree(responseStream);
-            JsonNode userId = neoJsonNode.get("UserId");
-            System.out.println("UserId: " + userId.toString());
-
->>>>>>> 881602768329c8f9d6617edd052f216d12a2e862
             connection.disconnect();
 
             URL managedAccountsURL = new URL(baseURL, "ManagedAccounts");
