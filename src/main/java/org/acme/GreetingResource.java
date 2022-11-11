@@ -129,6 +129,20 @@ public class GreetingResource {
             System.out.println("Credentials: " + credentialsResponse);
             connection.disconnect();
 
+            URL SignOutURL = new URL(baseURL, "Auth/Signout");
+            connection = (HttpURLConnection) SignOutURL.openConnection();
+            connection.setRequestProperty("Cookie", cookie);
+
+            connection.setRequestProperty("Authorization",
+                    "PS-Auth key=57dd0e20bd52bf0178a68ad86ecede1833041f1b6cf58ea258ed529083109415db9d27cf2be0e229a9c977ff2f3f08f908f3c16b79546edd77c317cd660abdf9; runas=salesforceipsa;");
+            String test2 = "";
+            connection.setDoOutput(true);
+            outputStream = connection.getOutputStream();
+            outputStream.write(test2.getBytes());
+            outputStream.close();
+            connection.getInputStream();
+            connection.disconnect();
+
         } catch (Exception e) {
             System.out.println(e);
         }
