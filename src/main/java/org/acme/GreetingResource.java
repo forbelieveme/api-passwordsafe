@@ -97,23 +97,36 @@ public class GreetingResource {
 
             URL requestIdURL = new URL(baseURL, "Requests");
             connection = (HttpURLConnection) requestIdURL.openConnection();
-			connection.setRequestProperty("Cookie", cookie);
-			connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Cookie", cookie);
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
             connection.setRequestProperty("Authorization",
                     "PS-Auth key=57dd0e20bd52bf0178a68ad86ecede1833041f1b6cf58ea258ed529083109415db9d27cf2be0e229a9c977ff2f3f08f908f3c16b79546edd77c317cd660abdf9; runas=salesforceipsa;");
 
-            String requestData = "{\"SystemId\":"+systemId+",\"AccountId\":"+accountId+",\"DurationMinutes\":1}";
+            String requestData = "{\"SystemId\":" + systemId + ",\"AccountId\":" + accountId
+                    + ",\"DurationMinutes\":1}";
             connection.setDoOutput(true);
             outputStream = connection.getOutputStream();
             outputStream.write(requestData.getBytes());
             outputStream.close();
             responseStream = connection.getInputStream();
-			byte[] data = new byte[1024];
-			responseStream.read(data);
-			String requestsResponse = new String(data);
+            byte[] data = new byte[1024];
+            responseStream.read(data);
+            String requestsResponse = new String(data);
 
             System.out.println("RequestId: " + requestsResponse);
 
+            connection.disconnect();
+
+            URL credentialsURL = new URL(baseURL, "Credentials/" + requestsResponse);
+            connection = (HttpURLConnection) credentialsURL.openConnection();
+            connection.setRequestProperty("Cookie", cookie);
+            connection.setRequestProperty("Authorization",
+                    "PS-Auth key=57dd0e20bd52bf0178a68ad86ecede1833041f1b6cf58ea258ed529083109415db9d27cf2be0e229a9c977ff2f3f08f908f3c16b79546edd77c317cd660abdf9; runas=salesforceipsa;");
+            responseStream = connection.getInputStream();
+            byte[] data2 = new byte[1024];
+            responseStream.read(data2);
+            String credentialsResponse = new String(data2);
+            System.out.println("Credentials: " + credentialsResponse);
             connection.disconnect();
 
         } catch (Exception e) {
