@@ -23,21 +23,35 @@ public class GreetingResource {
 
         @GET
         @Produces(MediaType.TEXT_PLAIN)
-        public Response hello() throws IOException {
+        public Response hello()  {
 
                 String host = "lab01vuvm.desabpd.popular.local";
                 String apiBase = "/beyondtrust/api/public/v3/";
                 String psAuthKey = "57dd0e20bd52bf0178a68ad86ecede1833041f1b6cf58ea258ed529083109415db9d27cf2be0e229a9c977ff2f3f08f908f3c16b79546edd77c317cd660abdf9";
                 String runAs = "salesforceipsa";
-                String authorizationHeader = "PS-Auth key=" + psAuthKey + "; runas=" + runAs + ";";
+                
+				try{
+					System.out.println(passwordSafeCredentials(host, apiBase, psAuthKey, runAs));
+				} catch (Exception e) {
+                        System.out.println(e);
+                }
+                
+                 
+
+                return Response.ok().build();
+        }
+		
+		public String passwordSafeCredentials(String host, String apiBase, String psAuthKey, String runAs) throws IOException {
+			String authorizationHeader = "PS-Auth key=" + psAuthKey + "; runas=" + runAs + ";";
                 URL baseURL = new URL("HTTPS", host, 443, apiBase);
                 HttpURLConnection connection;
                 String requestDataString = "";
                 String cookieString = "";
                 OutputStream outputStream;
                 InputStream responseStream;
+				String credentialsResponse = "";
 
-                try {
+                
                         /*
                          **********
                          **********
@@ -64,8 +78,16 @@ public class GreetingResource {
                         responseStream = connection.getInputStream();
                         ObjectMapper mapper = new ObjectMapper();
                         ArrayNode managedAccountArray = (ArrayNode) mapper.readTree(responseStream);
-                        JsonNode systemId = managedAccountArray.get(4).get("SystemId");
-                        JsonNode accountId = managedAccountArray.get(4).get("AccountId");
+                        JsonNode systemId = null;
+                        JsonNode accountId = null;
+						
+						for (JsonNode jsonNode : managedAccountArray) {
+                                if (jsonNode.get("AccountName").asText().equals("_IPSACRM")) {
+                                        System.out.println(jsonNode.get("UserPrincipalName").asText());
+										systemId=jsonNode.get("SystemId");
+										accountId=jsonNode.get("AccountId");
+                                }
+                        }
                         System.out.println("SystemId: " + systemId.toString());
                         System.out.println("AccountId: " + accountId.toString());
                         connection.disconnect();
@@ -104,7 +126,7 @@ public class GreetingResource {
                         responseStream = connection.getInputStream();
                         byte[] responseData = new byte[1024];
                         responseStream.read(responseData);
-                        String credentialsResponse = new String(responseData);
+                        credentialsResponse = new String(responseData);
                         System.out.println("Credentials: " + credentialsResponse);
                         connection.disconnect();
 
@@ -122,12 +144,8 @@ public class GreetingResource {
                         outputStream.write(requestDataString.getBytes());
                         outputStream.close();
                         connection.getInputStream();
-                        connection.disconnect();
-
-                } catch (Exception e) {
-                        System.out.println(e);
-                }
-
-                return Response.ok().build();
-        }
+				connection.disconnect();
+				
+				return credentialsResponse;
+		}
 }
