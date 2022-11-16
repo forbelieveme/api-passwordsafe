@@ -85,7 +85,6 @@ public class GreetingResource {
 
                 for (JsonNode jsonNode : managedAccountArray) {
                         if (jsonNode.get("AccountName").asText().equals("_IPSACRM")) {
-                                System.out.println(jsonNode.get("UserPrincipalName").asText());
                                 systemId = jsonNode.get("SystemId");
                                 accountId = jsonNode.get("AccountId");
                         }
