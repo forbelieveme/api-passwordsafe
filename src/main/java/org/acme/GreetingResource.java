@@ -32,9 +32,10 @@ public class GreetingResource {
                 String apiBase = "/beyondtrust/api/public/v3/";
                 String psAuthKey = "57dd0e20bd52bf0178a68ad86ecede1833041f1b6cf58ea258ed529083109415db9d27cf2be0e229a9c977ff2f3f08f908f3c16b79546edd77c317cd660abdf9";
                 String runAs = "salesforceipsa";
+                String accountName = "_IPSACRM";
 
                 try {
-                        System.out.println(passwordSafeCredentials(host, apiBase, psAuthKey, runAs));
+                        System.out.println(passwordSafeCredentials(host, apiBase, psAuthKey, runAs, accountName));
                 } catch (Exception e) {
                         System.out.println(e);
                 }
@@ -42,7 +43,8 @@ public class GreetingResource {
                 return Response.ok().build();
         }
 
-        public String passwordSafeCredentials(String host, String apiBase, String psAuthKey, String runAs)
+        public String passwordSafeCredentials(String host, String apiBase, String psAuthKey, String runAs,
+                        String accountName)
                         throws IOException {
                 // System.out.println("System IP Address : " +
                 // (localhost.getHostAddress()).trim());
@@ -89,7 +91,7 @@ public class GreetingResource {
                 JsonNode accountId = null;
 
                 for (JsonNode jsonNode : managedAccountArray) {
-                        if (jsonNode.get("AccountName").asText().equals("_IPSACRM")) {
+                        if (jsonNode.get("AccountName").asText().equals(accountName)) {
                                 systemId = jsonNode.get("SystemId");
                                 accountId = jsonNode.get("AccountId");
                         }
@@ -132,6 +134,7 @@ public class GreetingResource {
                 byte[] responseData = new byte[1024];
                 responseStream.read(responseData);
                 credentialsResponse = new String(responseData);
+                credentialsResponse = credentialsResponse.replace("\"", "");
                 connection.disconnect();
 
                 /*
