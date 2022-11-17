@@ -44,9 +44,10 @@ public class GreetingResource {
 
         public String passwordSafeCredentials(String host, String apiBase, String psAuthKey, String runAs)
                         throws IOException {
-                InetAddress localhost = InetAddress.getLocalHost();
-                System.out.println("System IP Address : " + (localhost.getHostAddress()).trim());
+                // System.out.println("System IP Address : " +
+                // (localhost.getHostAddress()).trim());
 
+                InetAddress localhost = InetAddress.getLocalHost();
                 String authorizationHeader = "PS-Auth key=" + psAuthKey + "; runas=" + runAs + ";";
                 URL baseURL = new URL("HTTPS", host, 443, apiBase);
                 HttpURLConnection connection;
@@ -62,7 +63,7 @@ public class GreetingResource {
                  */
                 URL SignAppInURL = new URL(baseURL, "Auth/SignAppIn");
                 connection = (HttpURLConnection) SignAppInURL.openConnection();
-                // connection.setRequestProperty("X-Forwarded-For", "");
+                connection.setRequestProperty("X-Forwarded-For", (localhost.getHostAddress()).trim());
                 connection.setRequestProperty("Authorization", authorizationHeader);
                 connection.setDoOutput(true);
                 outputStream = connection.getOutputStream();
@@ -79,7 +80,7 @@ public class GreetingResource {
                 URL managedAccountsURL = new URL(baseURL, "ManagedAccounts");
                 connection = (HttpURLConnection) managedAccountsURL.openConnection();
                 connection.setRequestProperty("Cookie", cookieString);
-                // connection.setRequestProperty("X-Forwarded-For", "");
+                connection.setRequestProperty("X-Forwarded-For", (localhost.getHostAddress()).trim());
                 connection.setRequestProperty("Authorization", authorizationHeader);
                 responseStream = connection.getInputStream();
                 ObjectMapper mapper = new ObjectMapper();
@@ -102,7 +103,7 @@ public class GreetingResource {
                 URL requestIdURL = new URL(baseURL, "Requests");
                 connection = (HttpURLConnection) requestIdURL.openConnection();
                 connection.setRequestProperty("Cookie", cookieString);
-                // connection.setRequestProperty("X-Forwarded-For", "");
+                connection.setRequestProperty("X-Forwarded-For", (localhost.getHostAddress()).trim());
                 connection.setRequestProperty("Content-Type", "application/json; utf-8");
                 connection.setRequestProperty("Authorization", authorizationHeader);
 
@@ -125,7 +126,7 @@ public class GreetingResource {
                 URL credentialsURL = new URL(baseURL, "Credentials/" + requestsResponse);
                 connection = (HttpURLConnection) credentialsURL.openConnection();
                 connection.setRequestProperty("Cookie", cookieString);
-                // connection.setRequestProperty("X-Forwarded-For", "");
+                connection.setRequestProperty("X-Forwarded-For", (localhost.getHostAddress()).trim());
                 connection.setRequestProperty("Authorization", authorizationHeader);
                 responseStream = connection.getInputStream();
                 byte[] responseData = new byte[1024];
@@ -140,7 +141,7 @@ public class GreetingResource {
                 URL SignOutURL = new URL(baseURL, "Auth/Signout");
                 connection = (HttpURLConnection) SignOutURL.openConnection();
                 connection.setRequestProperty("Cookie", cookieString);
-                // connection.setRequestProperty("X-Forwarded-For", "");
+                connection.setRequestProperty("X-Forwarded-For", (localhost.getHostAddress()).trim());
                 connection.setRequestProperty("Authorization", authorizationHeader);
                 requestDataString = "";
                 connection.setDoOutput(true);
