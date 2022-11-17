@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
 
 import javax.ws.rs.GET;
@@ -43,6 +44,9 @@ public class GreetingResource {
 
         public String passwordSafeCredentials(String host, String apiBase, String psAuthKey, String runAs)
                         throws IOException {
+                InetAddress localhost = InetAddress.getLocalHost();
+                System.out.println("System IP Address : " + (localhost.getHostAddress()).trim());
+
                 String authorizationHeader = "PS-Auth key=" + psAuthKey + "; runas=" + runAs + ";";
                 URL baseURL = new URL("HTTPS", host, 443, apiBase);
                 HttpURLConnection connection;
