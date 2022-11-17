@@ -108,7 +108,7 @@ public class GreetingResource {
                 connection.setRequestProperty("Authorization", authorizationHeader);
 
                 requestDataString = "{\"SystemId\":" + systemId + ",\"AccountId\":" + accountId
-                                + ",\"DurationMinutes\":1}";
+                                + ",\"DurationMinutes\":10}";
                 connection.setDoOutput(true);
                 outputStream = connection.getOutputStream();
                 outputStream.write(requestDataString.getBytes());
